@@ -17,6 +17,7 @@ driver=config.chrome_driver   ##Using Driver Path
 class Add_User_cred():
 
     def AddUser(self):
+	
         self.user_id_enabled=driver.find_element_by_name(config.userid)     ## Verifying User-ID Icon Enabled & enter the Keys
         if self.user_id_enabled.is_enabled():
             print("user-id icon is enabled")
@@ -55,7 +56,7 @@ class Add_User_cred():
         self.user_last_name=driver.find_element_by_xpath("//*[@id='userTable']/tbody/tr[2]/td[3]").text
         self.user_password=driver.find_element_by_xpath("//*[@id='userTable']/tbody/tr[2]/td[4]").text
 
-    def Verify_user(self):
+    def Verify_user(self):																				###Verify New added Users in the Table Entry
         if self.user_name==config.user_first_id:
             print("Username is present in table entry")
         else:
@@ -76,12 +77,12 @@ class Add_User_cred():
         else:
             print("user password is not present in table entry")
 
-    def Logout_Portal(self):
+    def Logout_Portal(self):																		#### Function to Log Out
         Logout=driver.find_element_by_xpath("/html/body/div/div/div[1]/nav/span[3]/a")
         Logout.click()
 
     def View_user(self):
-        view_user=driver.find_element_by_xpath("/html/body/div/div/div[1]/nav/span[2]/a")
+        view_user=driver.find_element_by_xpath("/html/body/div/div/div[1]/nav/span[2]/a")			#### Function to check view users, from Admin Portal
         view_user.click()
 
     def Logging_with_new_added_credentials(self):
@@ -98,7 +99,7 @@ class Add_User_cred():
         login=driver.find_element_by_xpath(config.Login_enter)
         login.click()
 
-    def Update_user(self):
+    def Update_user(self):                                                                   #### Updating the user credentials
 
         self.user_id_enabled=driver.find_element_by_xpath("/html/body/div/div/div[2]/form/div[1]/input[1]")     ## Verifying User-ID Icon Enabled & enter the Keys
         if self.user_id_enabled.is_enabled():
@@ -110,7 +111,7 @@ class Add_User_cred():
         self.user_firstname.clear()
         if self.user_firstname.is_enabled():
             print("user-firstname icon is enabled")
-            self.user_firstname.send_keys("first_user_new")
+            self.user_firstname.send_keys("first_user_new")                                     #### Change the firstname & observe, updates are populated on the page
         else:
             print("user-firstname icon is not enabled")
 
@@ -123,15 +124,35 @@ class Add_User_cred():
         else:
             print("Modifications not populated on portal")
 
+			
+########
+####Scenario-1Verify Users are successfully able to add & displayed in the table entry.
+########			
+			
 user_verify_credentials=Add_User_cred()
 user_verify_credentials.AddUser()
 user_verify_credentials.Verify_user()
 user_verify_credentials.Logout_Portal()
+
+######
+####Scenario-2:Verify after logging out from the portal & re-logging in, new added users are still be visible under table entry.
+#######
+
 Login.Admin_Login()
 user_verify_credentials.View_user()
 user_verify_credentials.Verify_user()
 user_verify_credentials.Logout_Portal()
+
+#########
+######Scenario-3:Verify logging from newly added user credentials.
+#########
+
 user_verify_credentials.Logging_with_new_added_credentials()
+
+#########
+#####Scenario-4:Verify Modifying the parameters for existing user.
+#########
+
 user_verify_credentials.Update_user()
 
 driver.quit()
