@@ -15,7 +15,7 @@ if ele.is_displayed():
     ele.send_keys(config.admin_login)
     print("Entered logged in correct")
 
-ele_pass=driver.find_element_by_xpath(config.Login_pass_path)
+ele_pass=driver.find_element_by_xpath(config.Login_pass_path)   ## Verifying Path for password & entering the credentials
 if ele_pass.is_displayed():
     ele_pass.send_keys(config.admin_password)
     print("Password entered correct")
